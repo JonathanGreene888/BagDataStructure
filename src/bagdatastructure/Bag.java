@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import java.util.Iterator;
 
+import java.util.stream.Collectors;
+
 //create a bag using an arraylist
 //add in a add method that adds an element to the arraylist bag
 //add in a remove method that removes an element from the arraylist bag
@@ -45,10 +47,42 @@ public class Bag<T> implements Iterable<T>  {
     public boolean contains(T item) {
         return items.contains(item);
     }
+    
+    // Create a size method that returns all the number of elements in the bag.
+    public int size() {
+    	return items.size();
+    }
+    
+    // create a merge method to combine two bags together.
+    public void merge(Bag<T> bag2) {
+        for (T item : bag2) {
+            this.add(item);
+        }
+    }
+    
+    // create a method that removes all duplicates and returns a new bag with only single instances
+//    public Bag<T> distinct() {
+//    	Bag<T> newBag = new Bag<T>();
+//		for (T item: items) {
+//			
+//			// Doesn't work because contains uses equals and compares the place in memory not the content of that space. 
+//    		if(!newBag.contains(item)) {
+//    			newBag.add(item);
+//    		}
+//    	}
+//    	return newBag;
+//    }
+	 public Bag<T> distinct() {
+	        Bag<T> distinctBag = new Bag<>();
+	        this.items.stream()
+	                .distinct()
+	                .forEach(distinctBag::add);
+	        return distinctBag;
+	    }
 
 
 	@Override
-	// Not sure what I am supposed to do with this. 
+	// Iterates over the items sort of like a loop except it can only go through one iteration. 
 	public Iterator<T> iterator() {
         return items.iterator();
     }
